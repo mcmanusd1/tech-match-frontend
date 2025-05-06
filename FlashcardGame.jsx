@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const BASE_URL = 'https://tech-match-backend.onrender.com'; // Replace with your actual backend URL
+const BASE_URL = 'https://tech-match-backend.onrender.com'; // Replace if your backend changes
 
 const fetchPairs = async (category = 'all') => {
   const response = await fetch(`${BASE_URL}/api/pairs?category=${category}`);
@@ -108,20 +108,5 @@ export default function FlashcardGame() {
         ))}
       </div>
 
-      <div className="text-center mt-4">
-        <button onClick={resetGame} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-          Reset Game
-        </button>
-      </div>
+      <div className="text-center mt
 
-      <div className="mt-6 border-t pt-6">
-        <h2 className="text-xl font-semibold text-center">Admin Panel: Add New Pair</h2>
-        <div className="flex justify-center gap-4 mt-4 flex-wrap">
-          <input
-            value={term}
-            onChange={(e) => setTerm(e.target.value)}
-            placeholder="Term"
-            className="border p-2 rounded"
-          />
-          <input
-            value={match}
