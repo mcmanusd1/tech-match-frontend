@@ -108,5 +108,48 @@ export default function FlashcardGame() {
         ))}
       </div>
 
-      <div className="text-center mt
+      <div className="text-center mt-4">
+        <button
+          onClick={resetGame}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Reset Game
+        </button>
+      </div>
 
+      <div className="mt-6 border-t pt-6">
+        <h2 className="text-xl font-semibold text-center">Admin Panel: Add New Pair</h2>
+        <div className="flex justify-center gap-4 mt-4 flex-wrap">
+          <input
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+            placeholder="Term"
+            className="border p-2 rounded"
+          />
+          <input
+            value={match}
+            onChange={(e) => setMatch(e.target.value)}
+            placeholder="Match"
+            className="border p-2 rounded"
+          />
+          <select
+            value={adminCategory}
+            onChange={(e) => setAdminCategory(e.target.value)}
+            className="border p-2 rounded"
+          >
+            <option value="dotnet">.NET</option>
+            <option value="java">Java</option>
+            <option value="cloud">AWS & Azure</option>
+            <option value="api">API</option>
+          </select>
+          <button
+            onClick={handleAddPair}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
