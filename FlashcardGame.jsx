@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const BASE_URL = 'https://tech-match-backend.onrender.com'; // Replace if your backend changes
+const BASE_URL = 'https://tech-match-backend-eglb.onrender.com'; // Update if needed
 
 const fetchPairs = async (category = 'all') => {
   const response = await fetch(`${BASE_URL}/api/pairs?category=${category}`);
@@ -34,6 +34,7 @@ export default function FlashcardGame() {
   const [term, setTerm] = useState('');
   const [match, setMatch] = useState('');
   const [adminCategory, setAdminCategory] = useState('dotnet');
+  const [showHelp, setShowHelp] = useState(false);
 
   useEffect(() => {
     fetchPairs(category).then((data) => setCards(shuffle(data)));
@@ -76,19 +77,31 @@ export default function FlashcardGame() {
     }
   };
 
+  const closeModal = (e) => {
+    if (e.target.id === 'modal-bg') setShowHelp(false);
+  };
+
   return (
-    <div className="p-4 grid gap-6">
+    <div className="p-4 grid gap-6 relative">
       <h1 className="text-2xl font-bold text-center">Tech Match Flashcards</h1>
 
-      <div className="text-center mb-4">
-        <label className="mr-2 font-medium">Choose a category:</label>
-        <select value={category} onChange={handleCategoryChange} className="border p-2 rounded">
-          <option value="all">All</option>
-          <option value="dotnet">.NET</option>
-          <option value="java">Java</option>
-          <option value="cloud">AWS & Azure</option>
-          <option value="api">API</option>
-        </select>
+      <div className="text-center mb-4 space-y-2">
+        <button
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+          onClick={() => setShowHelp(true)}
+        >
+          How to Play
+        </button>
+        <div>
+          <label className="mr-2 font-medium">Choose a category:</label>
+          <select value={category} onChange={handleCategoryChange} className="border p-2 rounded">
+            <option value="all">All</option>
+            <option value="dotnet">.NET</option>
+            <option value="java">Java</option>
+            <option value="cloud">AWS & Azure</option>
+            <option value="api">API</option>
+          </select>
+        </div>
       </div>
 
       <div className="grid grid-cols-4 gap-4">
@@ -150,6 +163,31 @@ export default function FlashcardGame() {
           </button>
         </div>
       </div>
+
+      {showHelp && (
+        <div
+          id="modal-bg"
+          onClick={closeModal}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        >
+          <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-lg text-center space-y-4">
+            <h2 className="text-xl font-bold">How to Play</h2>
+            <ul className="text-left list-disc list-inside space-y-2 text-gray-700">
+              <li>Select a category to focus (e.g., .NET, Java, API, Cloud).</li>
+              <li>Click on two cards to try matching related terms.</li>
+              <li>Matched cards turn green and stay visible.</li>
+              <li>Use the Admin Panel to add custom tech pairs.</li>
+              <li>Click “Reset Game” to reshuffle the board.</li>
+            </ul>
+            <button
+              onClick={() => setShowHelp(false)}
+              className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+            >
+              Got it!
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
