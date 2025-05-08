@@ -106,20 +106,23 @@ export default function FlashcardGame() {
       </div>
 
       <div className="grid grid-cols-4 gap-4">
-        {cards.map((card) => (
-          <motion.div
-            key={card.id}
-            onClick={() => handleClick(card)}
-            className={`cursor-pointer ${
-              selected.includes(card) || matches.includes(card.match)
-                ? "bg-green-200"
-                : "bg-white"
-            } p-4 rounded-xl shadow text-center font-medium border`}
-            whileTap={{ scale: 0.95 }}
-          >
-            {card.label}
-          </motion.div>
-        ))}
+        {cards
+  .filter((card) => !matches.includes(card.match))
+  .map((card) => (
+    <motion.div
+      key={card.id}
+      onClick={() => handleClick(card)}
+      className={`cursor-pointer ${
+        selected.includes(card)
+          ? "bg-yellow-100"
+          : "bg-white"
+      } p-4 rounded-xl shadow text-center font-medium border`}
+      whileTap={{ scale: 0.95 }}
+    >
+      {card.label}
+    </motion.div>
+))}
+
       </div>
 
       <div className="text-center mt-4">
